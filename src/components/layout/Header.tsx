@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Search, Menu, X, Command, Github } from 'lucide-react';
 import { type Locale } from '@/lib/i18n/config';
@@ -22,6 +22,7 @@ export interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => {
   const t = useTranslations('common');
   const router = useRouter();
+  const pathname = usePathname() || '';
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -164,10 +165,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${scrolled
-        ? 'bg-[hsl(var(--color-background))]/80 backdrop-blur-md border-b border-[hsl(var(--color-border))/0.5] shadow-sm'
-        : 'bg-transparent border-transparent'
-        }`}
+      className={`lwh-header fixed top-0 z-50 w-full transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''}`}
       role="banner"
     >
       <div className="container mx-auto px-4">
@@ -179,51 +177,35 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
               className="group flex items-center gap-2.5 text-xl font-bold text-[hsl(var(--color-foreground))] hover:opacity-90 transition-opacity"
               aria-label={`${t('brand')} - ${t('navigation.home')}`}
             >
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[hsl(var(--color-primary))] to-[hsl(var(--color-accent))] shadow-lg shadow-primary/25 transition-transform group-hover:scale-105">
-                <svg
-                  className="h-5 w-5 text-white"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                  <polyline points="14 2 14 8 20 8" />
-                </svg>
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/lwh-logo.png" alt="Logistics Warehouse" className="h-full w-full object-contain p-[3px]" />
               </div>
-              <span className="text-xl tracking-tight" data-testid="brand-name">
-                {t('brand')}
+              <span className="flex flex-col leading-none text-white" data-testid="brand-name">
+                <span className="lwh-head text-[22px] font-bold">{t('brand')}</span>
+                <span className="mt-1 hidden text-[11px] font-semibold uppercase tracking-[3px] opacity-90 sm:block">Logistics Warehouse</span>
               </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav
-            className={`hidden md:flex items-center gap-1 rounded-full border border-[hsl(var(--color-border))/0.4] bg-[hsl(var(--color-background))/0.5] p-1.5 backdrop-blur-sm shadow-sm transition-all duration-300 ${isSearchOpen ? 'opacity-0 translate-y-[-10px] pointer-events-none' : 'opacity-100 translate-y-0'
-              }`}
+            className={`lwh-nav hidden md:flex items-stretch transition-all duration-300 ${isSearchOpen ? 'opacity-0 translate-y-[-10px] pointer-events-none' : 'opacity-100 translate-y-0'}`}
             role="navigation"
             aria-label="Main navigation"
           >
             {navItems.map((item) => {
-              const isStudio = item.href.endsWith('/studio');
+              const isActive = item.href === `/${locale}`
+                ? pathname === `/${locale}` || pathname === `/${locale}/`
+                : pathname.startsWith(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all inline-flex items-center gap-1.5 ${
-                    isStudio
-                      ? 'text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary)/0.1)]'
-                      : 'text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))/0.5]'
-                  }`}
+                  aria-current={isActive ? 'page' : undefined}
+                  className="px-5 pt-[13px] pb-[10px] transition-colors"
                 >
-                  <span>{item.label}</span>
-                  {isStudio && (
-                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-[hsl(var(--color-primary))] text-white leading-none">
-                      NEW
-                    </span>
-                  )}
+                  {item.label}
                 </Link>
               );
             })}

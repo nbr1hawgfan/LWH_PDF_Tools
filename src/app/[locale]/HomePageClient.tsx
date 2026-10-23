@@ -48,7 +48,7 @@ export default function HomePageClient({ locale, localizedToolContent }: HomePag
       icon: Wrench,
       titleKey: 'home.features.powerful.title',
       descriptionKey: 'home.features.powerful.description',
-      color: 'text-blue-500',
+      color: 'text-[#C41230]',
     },
   ];
 
@@ -91,23 +91,8 @@ export default function HomePageClient({ locale, localizedToolContent }: HomePag
           className="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-28"
           aria-labelledby="hero-title"
         >
-          {/* Animated Background Blobs */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-[hsl(var(--color-primary)/0.2)] rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" />
-            <div className="absolute top-0 right-1/4 w-96 h-96 bg-[hsl(var(--color-accent)/0.2)] rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000" />
-            <div className="absolute -bottom-32 left-1/2 w-96 h-96 bg-[hsl(var(--color-secondary)/0.3)] rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000" />
-          </div>
-
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
-              {/* Brand Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-[hsl(var(--color-background)/0.8)] border border-[hsl(var(--color-primary)/0.2)] shadow-sm backdrop-blur-md transition-all hover:bg-[hsl(var(--color-background))]">
-                <Sparkles className="h-4 w-4 text-[hsl(var(--color-primary))]" aria-hidden="true" />
-                <span className="text-sm font-medium text-[hsl(var(--color-primary))]">
-                  {t('common.brand')}
-                </span>
-              </div>
-
               {/* Hero Title */}
               <h1 id="hero-title" className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
                 <span className="text-[hsl(var(--color-foreground))]">{t('home.hero.title')} </span>
@@ -121,26 +106,13 @@ export default function HomePageClient({ locale, localizedToolContent }: HomePag
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-3.5 justify-center items-center">
-                <Link href={`/${locale}/studio`}>
+                <Link href={`/${locale}/tools`}>
                   <Button
                     variant="primary"
                     size="lg"
-                    className="h-11 px-7 text-base shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all hover:-translate-y-0.5 gap-2"
+                    className="h-11 px-7 text-base transition-all hover:-translate-y-0.5 gap-2"
                   >
-                    <Sparkles className="h-4 w-4" aria-hidden="true" />
-                    <span>{locale === 'zh' ? '进入 Studio 工作台' : 'Open PDF Studio'}</span>
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-white/20 text-white leading-none">
-                      NEW
-                    </span>
-                  </Button>
-                </Link>
-                <Link href={`/${locale}/tools`}>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="h-11 px-6 text-base transition-all hover:-translate-y-0.5 gap-2 bg-[hsl(var(--color-card)/0.6)] backdrop-blur-sm"
-                  >
-                    <LayoutGrid className="h-4 w-4 text-[hsl(var(--color-muted-foreground))]" aria-hidden="true" />
+                    <LayoutGrid className="h-4 w-4" aria-hidden="true" />
                     <span>{t('home.hero.cta')}</span>
                   </Button>
                 </Link>
