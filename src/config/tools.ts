@@ -1650,6 +1650,12 @@ export const LWH_ENABLED_TOOL_IDS = new Set<string>([
   'pdf-to-docx', 'pdf-to-excel', 'extract-tables', 'ocr-pdf', 'pdf-to-jpg',
   // Convert to PDF
   'word-to-pdf', 'excel-to-pdf', 'image-to-pdf',
+  // Added Oct 2026 for manager training
+  'redact-pdf', 'find-and-redact', 'encrypt-pdf', 'decrypt-pdf',
+  'page-numbers', 'header-footer', 'add-watermark',
+  'alternate-merge', 'deskew-pdf', 'remove-blank-pages',
+  'crop-pdf', 'add-blank-page', 'reverse-pages', 'compare-pdfs',
+  'form-creator',
 ]);
 for (const tool of tools) {
   if (!LWH_ENABLED_TOOL_IDS.has(tool.id)) tool.disabled = true;
