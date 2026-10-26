@@ -12,7 +12,6 @@ import { searchTools, SearchResult } from '@/lib/utils/search';
 import { getToolContent } from '@/config/tool-content';
 import { getAllTools } from '@/config/tools';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
-import { UpdateCheckButton } from '@/components/common/UpdateCheckButton';
 
 export interface HeaderProps {
   locale: Locale;
@@ -309,8 +308,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
               }}
             />
 
-            {/* Update Check Button */}
-            <UpdateCheckButton />
+            {/* LWH: update checker removed — this site is updated centrally from the LWH_PDF_Tools repo */}
 
             {/* GitHub Repository Link */}
             <a
